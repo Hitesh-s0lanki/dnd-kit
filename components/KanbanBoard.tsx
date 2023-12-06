@@ -15,7 +15,6 @@ import {
   useSensors,
 } from "@dnd-kit/core";
 import { SortableContext, arrayMove } from "@dnd-kit/sortable";
-import { createPortal } from "react-dom";
 import TaskCard from "./task_card";
 
 const KanbanBoard = () => {
@@ -66,20 +65,15 @@ const KanbanBoard = () => {
             Add Column
           </button>
         </div>
-        {createPortal(
-          <DragOverlay>
-            {activeColumn && (
-              <ColumnContainer
-                column={activeColumn}
-                tasks={tasks.filter(
-                  (task) => task.columnId === activeColumn.id
-                )}
-              />
-            )}
-            {activeTask && <TaskCard task={activeTask} />}
-          </DragOverlay>,
-          document.body
-        )}
+        <DragOverlay>
+          {activeColumn && (
+            <ColumnContainer
+              column={activeColumn}
+              tasks={tasks.filter((task) => task.columnId === activeColumn.id)}
+            />
+          )}
+          {activeTask && <TaskCard task={activeTask} />}
+        </DragOverlay>
       </DndContext>
     </div>
   );
